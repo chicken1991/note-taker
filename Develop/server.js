@@ -32,6 +32,11 @@ app.get('/api/notes', (req, res) =>
     res.sendFile(path.join(__dirname, '/db/db.json'))
 );
 
+//catch-all sends any "other" page to home
+app.get('*', (req, res) =>
+    res.sendFile(path.join(__dirname, '/public/index.html'))
+);
+
 //TODO: POST requests to write to /db/db.json
 app.post('/api/notes', (req, res) => {
     console.info(`${req.method} request received`);
@@ -70,7 +75,7 @@ app.delete(`/api/notes/:id`, (req, res) => {
             let tmpArray = json.filter((dbase) => dbase.id !== noteID);
 
             writeToFile('./db/db.json', tmpArray);
-            
+
             //This is very important, or else the old objects are retained after making a new note
             db = tmpArray;
 
