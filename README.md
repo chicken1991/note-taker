@@ -19,7 +19,7 @@
 
   <a name="Installation"></a>
   ## Installation
-  Clone this repo, then run "npm i" to install dependencies
+  [Clone this repo](https://github.com/chicken1991/note-taker.git), then run "npm i" to install dependencies
 
   <a name="Usage"></a>
   ## Usage
