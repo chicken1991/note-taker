@@ -8,7 +8,7 @@ const { readFromFile, writeToFile } = require('./utils/fsUtils.js');
 var db = require('./db/db.json');
 
 //listen port
-const PORT = 443;
+const PORT = 80;
 
 // middlware
 const app = express();
