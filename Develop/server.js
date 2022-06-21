@@ -29,13 +29,12 @@ app.get('/notes', (req, res) =>
 
 //GET request path for the api so that notes can be rendered
 app.get('/api/notes', (req, res) =>
-res.sendFile(path.join(__dirname, '/db/db.json'))
+    res.sendFile(path.join(__dirname, '/db/db.json'))
 );
 
 //TODO: POST requests to write to /db/db.json
-app.post('/api/notes', (req,res) => {
+app.post('/api/notes', (req, res) => {
     console.info(`${req.method} request received`);
-    console.log("===============================================" + db)
     const { title, text } = req.body;
 
     if (title && text) {
@@ -66,20 +65,17 @@ app.post('/api/notes', (req,res) => {
 app.delete(`/api/notes/:id`, (req, res) => {
     const noteID = req.params.id;
     readFromFile('./db/db.json')
-    .then((data) => JSON.parse(data))
-    .then((json) => {
-        let tmpArray = json.filter((dbase) => dbase.id !== noteID);
-        // console.log(tmpArray);
+        .then((data) => JSON.parse(data))
+        .then((json) => {
+            let tmpArray = json.filter((dbase) => dbase.id !== noteID);
 
-        writeToFile('./db/db.json', tmpArray);
+            writeToFile('./db/db.json', tmpArray);
+            
+            //This is very important, or else the old objects are retained after making a new note
+            db = tmpArray;
 
-        console.log("+++++++++++++++++++++++++++" + tmpArray);
-
-        //This is very important, or else the old objects are retained after making a new note
-        db = tmpArray;
-
-        res.json(`Item ${noteID} has been deleted`);
-});
+            res.json(`Item ${noteID} has been deleted`);
+        });
 });
 
 app.listen(PORT, () =>
