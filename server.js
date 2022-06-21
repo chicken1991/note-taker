@@ -2,7 +2,7 @@ const express = require('express');
 const path = require('path');
 const fs = require('fs');
 const { randomUUID } = require('crypto');
-const { readFromFile, writeToFile } = require('./utils/fsutils.js');
+const { readFromFile, writeToFile } = require('./utils/fsUtils.js');
 
 //this is variable as db is modified and changes
 var db = require('./db/db.json');
