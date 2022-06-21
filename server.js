@@ -83,4 +83,5 @@ app.delete(`/api/notes/:id`, (req, res) => {
         });
 });
 
-app.listen(process.env.PORT || ${PORT});
+//env for Heroku, and hardcoded port 3001
+app.listen(process.env.PORT || 3001);
