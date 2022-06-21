@@ -2,6 +2,7 @@ const express = require('express');
 const path = require('path');
 const fs = require('fs');
 const { randomUUID } = require('crypto');
+let db = require('./db/db.json');
 
 const PORT = 3001;
 
@@ -23,7 +24,6 @@ app.get('/notes', (req, res) =>
 //TODO: POST requests to write to /db/db.json
 app.post('/api/notes', (req,res) => {
     console.info(`${req.method} request received`);
-    
     const { title, text } = req.body;
 
     if (title && text) {
@@ -40,7 +40,8 @@ app.post('/api/notes', (req,res) => {
 
         console.log(response);
         res.status(201).json(response);
-        fs.appendFile('./db/db.json', JSON.stringify(newNote), (err) => {
+        db.push(newNote);
+        fs.writeFile('./db/db.json', JSON.stringify(db), (err) => {
             if (err) { console.log(err); }
             else { console.log("File written successfully\n"); }
         });

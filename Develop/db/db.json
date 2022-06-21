@@ -1,8 +1,1 @@
-[
-    {
-        "id":"idtest", 
-        "title":"Test Title",
-        "text":"Test text"
-    }
-]
-{"id":"1585dccc-dfb2-4f19-8d45-51d63f594840","title":"Another test","text":"This should be the second test I guess"}
+[{"id":"idtest","title":"Test Title","text":"Test text"},{"id":"7009af0e-de0e-4a17-985e-d80addee2c2d","title":"TEST","text":"HELLO"},{"id":"6fba4629-756b-46e1-a94b-0c6b87ece945","title":"ANOTHER TEST","text":"HEELLOOO"}]
