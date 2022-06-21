@@ -3,10 +3,14 @@ const path = require('path');
 const fs = require('fs');
 const { randomUUID } = require('crypto');
 const { readFromFile, writeToFile } = require('./utils/fsutils.js');
-// const db = require('./db/db.json');
 
+//this is variable as db is modified and changes
+var db = require('./db/db.json');
+
+//listen port
 const PORT = 3001;
 
+// middlware
 const app = express();
 
 app.use(express.json());
@@ -31,7 +35,7 @@ res.sendFile(path.join(__dirname, '/db/db.json'))
 //TODO: POST requests to write to /db/db.json
 app.post('/api/notes', (req,res) => {
     console.info(`${req.method} request received`);
-    let db = require('./db/db.json');
+    console.log("===============================================" + db)
     const { title, text } = req.body;
 
     if (title && text) {
@@ -53,21 +57,26 @@ app.post('/api/notes', (req,res) => {
             if (err) { console.log(err); }
             else { console.log("File written successfully\n"); }
         });
-        //TODO: refresh the displayed notes list
     } else {
         res.status(500).json('Error in creating new note');
     }
 })
 
+//DELETE route that filters the objects and removes the corresponding ID
 app.delete(`/api/notes/:id`, (req, res) => {
     const noteID = req.params.id;
     readFromFile('./db/db.json')
     .then((data) => JSON.parse(data))
     .then((json) => {
-        let tmpArray = json.filter((db) => db.id !== noteID);
-        console.log(tmpArray);
+        let tmpArray = json.filter((dbase) => dbase.id !== noteID);
+        // console.log(tmpArray);
 
         writeToFile('./db/db.json', tmpArray);
+
+        console.log("+++++++++++++++++++++++++++" + tmpArray);
+
+        //This is very important, or else the old objects are retained after making a new note
+        db = tmpArray;
 
         res.json(`Item ${noteID} has been deleted`);
 });
